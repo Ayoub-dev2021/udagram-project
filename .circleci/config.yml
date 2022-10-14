@@ -70,12 +70,10 @@ jobs:
             echo "# TODO: Install, build, deploy in both apps"
             
 workflows:
- aws-cli:
-    jobs:
-      - aws-cli-cred-setup:
-          context: aws
   udagram:
     jobs:
+       - aws-cli-cred-setup:
+          context: aws
       - build
       - hold:
           filters:
