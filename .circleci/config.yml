@@ -60,6 +60,7 @@ jobs:
     steps:
       - node/install:
           node-version: '14.15' 
+       - aws-cli-cred-setup
       - eb/setup
       - aws-cli/setup
       - checkout
@@ -72,7 +73,6 @@ jobs:
 workflows:
   udagram:
     jobs:
-      - aws-cli-cred-setup
       - build
       - hold:
           filters:
@@ -85,4 +85,3 @@ workflows:
       - deploy:
           requires:
             - hold
-             - aws-cli-cred-setup
