@@ -6,14 +6,7 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
   # different jobs are calles later in the workflows sections
 jobs:
-  #Configure AWS IAM user
-  aws-cli-cred-setup:
-    executor: aws-cli/default
-    steps:
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_ACCESS_SECRET
-          aws-region: AWS_REGION_NAME
+  
   build:
     docker:
       # the base image can run most needed actions with orbs
@@ -55,14 +48,20 @@ jobs:
   # deploy step will run only after manual approval
  
   deploy:
+  #Configure AWS IAM user
+    
     docker:
       - image: "cimg/base:stable"
       # more setup needed for aws, node, elastic beanstalk
+    executor: aws-cli/default
     steps:
       - node/install:
           node-version: '14.15' 
+      - aws-cli/setup:
+            aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_ACCESS_SECRET
+          aws-region: AWS_REGION_NAME
       - eb/setup
-      - aws-cli/setup
       - checkout
       - run:
           name: Deploy App
