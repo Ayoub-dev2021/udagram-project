@@ -6,6 +6,14 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
   # different jobs are calles later in the workflows sections
 jobs:
+  #Configure AWS IAM user
+  aws-cli-cred-setup:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_ACCESS_SECRET
+          aws-region: AWS_REGION_NAME
   build:
     docker:
       # the base image can run most needed actions with orbs
@@ -45,6 +53,7 @@ jobs:
           command: |
             echo "TODO: Build the backend API"
   # deploy step will run only after manual approval
+ 
   deploy:
     docker:
       - image: "cimg/base:stable"
@@ -62,6 +71,10 @@ jobs:
             echo "# TODO: Install, build, deploy in both apps"
             
 workflows:
+  aws-cli:
+    jobs:
+      - aws-cli-cred-setup:
+          context: aws
   udagram:
     jobs:
       - build
@@ -73,6 +86,7 @@ workflows:
           type: approval
           requires:
             - build
+
       - deploy:
           requires:
             - hold
