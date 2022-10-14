@@ -52,10 +52,6 @@ jobs:
     steps:
       - node/install:
           node-version: '14.15' 
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_ACCESS_SECRET
-          aws-region: AWS_REGION_NAME
       - eb/setup
       - aws-cli/setup
       - checkout
