@@ -72,8 +72,7 @@ jobs:
 workflows:
   udagram:
     jobs:
-       - aws-cli-cred-setup:
-          context: aws
+      - aws-cli-cred-setup
       - build
       - hold:
           filters:
