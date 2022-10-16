@@ -7,7 +7,7 @@ orbs:
   # different jobs are calles later in the workflows sections
 jobs:
   aws-cli-cred-setup:
-    #Configure AWS profile by setting the IAM user credintails
+    #Configure AWS profile by setting the IAM user credentials
     executor: aws-cli/default
     steps:
       - aws-cli/setup:
